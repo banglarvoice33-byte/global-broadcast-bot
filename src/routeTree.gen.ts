@@ -10,33 +10,154 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EthicsRouteImport } from './routes/ethics'
+import { Route as LearningRouteImport } from './routes/learning'
+import { Route as NewsroomRouteImport } from './routes/newsroom'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
+import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as ApiPublicHooksNewscycleRouteImport } from './routes/api/public/hooks/newscycle'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EthicsRoute = EthicsRouteImport.update({
+  id: '/ethics',
+  path: '/ethics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningRoute = LearningRouteImport.update({
+  id: '/learning',
+  path: '/learning',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsroomRoute = NewsroomRouteImport.update({
+  id: '/newsroom',
+  path: '/newsroom',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArticleSlugRoute = ArticleSlugRouteImport.update({
+  id: '/article/$slug',
+  path: '/article/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategorySlugRoute = CategorySlugRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHooksNewscycleRoute = ApiPublicHooksNewscycleRouteImport.update({
+  id: '/api/public/hooks/newscycle',
+  path: '/api/public/hooks/newscycle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/ethics': typeof EthicsRoute
+  '/learning': typeof LearningRoute
+  '/newsroom': typeof NewsroomRoute
+  '/privacy': typeof PrivacyRoute
+  '/search': typeof SearchRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
+  '/api/public/hooks/newscycle': typeof ApiPublicHooksNewscycleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/ethics': typeof EthicsRoute
+  '/learning': typeof LearningRoute
+  '/newsroom': typeof NewsroomRoute
+  '/privacy': typeof PrivacyRoute
+  '/search': typeof SearchRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
+  '/api/public/hooks/newscycle': typeof ApiPublicHooksNewscycleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/ethics': typeof EthicsRoute
+  '/learning': typeof LearningRoute
+  '/newsroom': typeof NewsroomRoute
+  '/privacy': typeof PrivacyRoute
+  '/search': typeof SearchRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
+  '/api/public/hooks/newscycle': typeof ApiPublicHooksNewscycleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/ethics'
+    | '/learning'
+    | '/newsroom'
+    | '/privacy'
+    | '/search'
+    | '/article/$slug'
+    | '/category/$slug'
+    | '/api/public/hooks/newscycle'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contact'
+    | '/ethics'
+    | '/learning'
+    | '/newsroom'
+    | '/privacy'
+    | '/search'
+    | '/article/$slug'
+    | '/category/$slug'
+    | '/api/public/hooks/newscycle'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/ethics'
+    | '/learning'
+    | '/newsroom'
+    | '/privacy'
+    | '/search'
+    | '/article/$slug'
+    | '/category/$slug'
+    | '/api/public/hooks/newscycle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  EthicsRoute: typeof EthicsRoute
+  LearningRoute: typeof LearningRoute
+  NewsroomRoute: typeof NewsroomRoute
+  PrivacyRoute: typeof PrivacyRoute
+  SearchRoute: typeof SearchRoute
+  ArticleSlugRoute: typeof ArticleSlugRoute
+  CategorySlugRoute: typeof CategorySlugRoute
+  ApiPublicHooksNewscycleRoute: typeof ApiPublicHooksNewscycleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +169,84 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ethics': {
+      id: '/ethics'
+      path: '/ethics'
+      fullPath: '/ethics'
+      preLoaderRoute: typeof EthicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning': {
+      id: '/learning'
+      path: '/learning'
+      fullPath: '/learning'
+      preLoaderRoute: typeof LearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newsroom': {
+      id: '/newsroom'
+      path: '/newsroom'
+      fullPath: '/newsroom'
+      preLoaderRoute: typeof NewsroomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/article/$slug': {
+      id: '/article/$slug'
+      path: '/article/$slug'
+      fullPath: '/article/$slug'
+      preLoaderRoute: typeof ArticleSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/category/$slug': {
+      id: '/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof CategorySlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/newscycle': {
+      id: '/api/public/hooks/newscycle'
+      path: '/api/public/hooks/newscycle'
+      fullPath: '/api/public/hooks/newscycle'
+      preLoaderRoute: typeof ApiPublicHooksNewscycleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  EthicsRoute: EthicsRoute,
+  LearningRoute: LearningRoute,
+  NewsroomRoute: NewsroomRoute,
+  PrivacyRoute: PrivacyRoute,
+  SearchRoute: SearchRoute,
+  ArticleSlugRoute: ArticleSlugRoute,
+  CategorySlugRoute: CategorySlugRoute,
+  ApiPublicHooksNewscycleRoute: ApiPublicHooksNewscycleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
