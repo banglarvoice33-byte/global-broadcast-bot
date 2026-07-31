@@ -14,7 +14,167 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      articles: {
+        Row: {
+          body: string
+          category_slug: string
+          created_at: string
+          dek: string
+          id: string
+          image_url: string | null
+          is_breaking: boolean
+          is_lead: boolean
+          media_type: string
+          published_at: string
+          risk_score: number
+          slug: string
+          source_count: number
+          status: string
+          title: string
+          video_url: string | null
+          views: number
+        }
+        Insert: {
+          body?: string
+          category_slug: string
+          created_at?: string
+          dek?: string
+          id?: string
+          image_url?: string | null
+          is_breaking?: boolean
+          is_lead?: boolean
+          media_type?: string
+          published_at?: string
+          risk_score?: number
+          slug: string
+          source_count?: number
+          status?: string
+          title: string
+          video_url?: string | null
+          views?: number
+        }
+        Update: {
+          body?: string
+          category_slug?: string
+          created_at?: string
+          dek?: string
+          id?: string
+          image_url?: string | null
+          is_breaking?: boolean
+          is_lead?: boolean
+          media_type?: string
+          published_at?: string
+          risk_score?: number
+          slug?: string
+          source_count?: number
+          status?: string
+          title?: string
+          video_url?: string | null
+          views?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "articles_category_slug_fkey"
+            columns: ["category_slug"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["slug"]
+          },
+        ]
+      }
+      automation_runs: {
+        Row: {
+          fetched: number
+          finished_at: string | null
+          id: string
+          note: string
+          published: number
+          skipped: number
+          started_at: string
+          status: string
+        }
+        Insert: {
+          fetched?: number
+          finished_at?: string | null
+          id?: string
+          note?: string
+          published?: number
+          skipped?: number
+          started_at?: string
+          status?: string
+        }
+        Update: {
+          fetched?: number
+          finished_at?: string | null
+          id?: string
+          note?: string
+          published?: number
+          skipped?: number
+          started_at?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          accent: string
+          created_at: string
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+        }
+        Insert: {
+          accent?: string
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+        }
+        Update: {
+          accent?: string
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      learning_hub: {
+        Row: {
+          created_at: string
+          duration: string
+          id: string
+          level: string
+          sort_order: number
+          summary: string
+          thumbnail_url: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          duration?: string
+          id?: string
+          level?: string
+          sort_order?: number
+          summary?: string
+          thumbnail_url?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          duration?: string
+          id?: string
+          level?: string
+          sort_order?: number
+          summary?: string
+          thumbnail_url?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
