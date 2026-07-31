@@ -10,7 +10,12 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EthicsRouteImport } from './routes/ethics'
+import { Route as LearningRouteImport } from './routes/learning'
 import { Route as NewsroomRouteImport } from './routes/newsroom'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
 
@@ -19,9 +24,34 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EthicsRoute = EthicsRouteImport.update({
+  id: '/ethics',
+  path: '/ethics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LearningRoute = LearningRouteImport.update({
+  id: '/learning',
+  path: '/learning',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsroomRoute = NewsroomRouteImport.update({
   id: '/newsroom',
   path: '/newsroom',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArticleSlugRoute = ArticleSlugRouteImport.update({
@@ -37,34 +67,82 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/ethics': typeof EthicsRoute
+  '/learning': typeof LearningRoute
   '/newsroom': typeof NewsroomRoute
+  '/privacy': typeof PrivacyRoute
+  '/search': typeof SearchRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/ethics': typeof EthicsRoute
+  '/learning': typeof LearningRoute
   '/newsroom': typeof NewsroomRoute
+  '/privacy': typeof PrivacyRoute
+  '/search': typeof SearchRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/ethics': typeof EthicsRoute
+  '/learning': typeof LearningRoute
   '/newsroom': typeof NewsroomRoute
+  '/privacy': typeof PrivacyRoute
+  '/search': typeof SearchRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/newsroom' | '/article/$slug' | '/category/$slug'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/ethics'
+    | '/learning'
+    | '/newsroom'
+    | '/privacy'
+    | '/search'
+    | '/article/$slug'
+    | '/category/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/newsroom' | '/article/$slug' | '/category/$slug'
-  id: '__root__' | '/' | '/newsroom' | '/article/$slug' | '/category/$slug'
+  to:
+    | '/'
+    | '/contact'
+    | '/ethics'
+    | '/learning'
+    | '/newsroom'
+    | '/privacy'
+    | '/search'
+    | '/article/$slug'
+    | '/category/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/ethics'
+    | '/learning'
+    | '/newsroom'
+    | '/privacy'
+    | '/search'
+    | '/article/$slug'
+    | '/category/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  EthicsRoute: typeof EthicsRoute
+  LearningRoute: typeof LearningRoute
   NewsroomRoute: typeof NewsroomRoute
+  PrivacyRoute: typeof PrivacyRoute
+  SearchRoute: typeof SearchRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
   CategorySlugRoute: typeof CategorySlugRoute
 }
@@ -78,11 +156,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ethics': {
+      id: '/ethics'
+      path: '/ethics'
+      fullPath: '/ethics'
+      preLoaderRoute: typeof EthicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/learning': {
+      id: '/learning'
+      path: '/learning'
+      fullPath: '/learning'
+      preLoaderRoute: typeof LearningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/newsroom': {
       id: '/newsroom'
       path: '/newsroom'
       fullPath: '/newsroom'
       preLoaderRoute: typeof NewsroomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/article/$slug': {
@@ -104,7 +217,12 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  EthicsRoute: EthicsRoute,
+  LearningRoute: LearningRoute,
   NewsroomRoute: NewsroomRoute,
+  PrivacyRoute: PrivacyRoute,
+  SearchRoute: SearchRoute,
   ArticleSlugRoute: ArticleSlugRoute,
   CategorySlugRoute: CategorySlugRoute,
 }
