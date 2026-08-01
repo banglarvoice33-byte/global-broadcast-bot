@@ -96,7 +96,8 @@ export const automationQuery = queryOptions({
       .select("id, started_at, finished_at, fetched, published, skipped, status, note")
       .order("started_at", { ascending: false })
       .limit(20);
-    if (error) throw new Error(error.message);
+    // Automation logs are internal: anonymous visitors get no rows.
+    if (error) return [];
     return (data ?? []) as AutomationRun[];
   },
 });
