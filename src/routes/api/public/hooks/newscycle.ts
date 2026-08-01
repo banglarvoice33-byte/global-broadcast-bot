@@ -171,7 +171,23 @@ async function rewriteInBengali(cluster: Cluster, apiKey: string) {
 export const Route = createFileRoute("/api/public/hooks/newscycle")({
   server: {
     handlers: {
-      POST: async () => {
+      POST: async ({ request }) => {
+        // This endpoint is only for the scheduled newsroom cycle (pg_cron).
+        // Require a shared secret so anonymous callers cannot burn AI credits
+        // or flood the articles table.
+        const cronSecret = process.env["NEWSCYCLE_CRON_SECRET"];
+        if (!cronSecret) {
+          return Response.json({ error: "Endpoint not configured" }, { status: 503 });
+        }
+        const provided =
+          request.headers.get("x-cron-secret") ??
+          (request.headers.get("authorization")?.startsWith("Bearer ")
+            ? request.headers.get("authorization")!.slice(7)
+            : null);
+        if (provided !== cronSecret) {
+          return Response.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         const apiKey = process.env["LOVABLE_API_KEY"];
         if (!apiKey) {
           return Response.json({ error: "Missing LOVABLE_API_KEY" }, { status: 500 });
