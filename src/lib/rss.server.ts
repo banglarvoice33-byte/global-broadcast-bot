@@ -5,7 +5,7 @@ export function renderRss(
   articles: FeedArticle[],
   category?: { slug: string; name: string },
 ): string {
-  const feedPath = category ? `/rss/${category.slug}.xml` : "/rss.xml";
+  const feedPath = category ? `/rss/${category.slug}` : "/rss.xml";
   const title = category ? `${SITE_NAME_BN} — ${category.name}` : SITE_NAME_BN;
 
   const items = articles

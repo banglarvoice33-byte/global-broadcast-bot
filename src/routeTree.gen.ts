@@ -22,7 +22,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
-import { Route as RssCategoryDotxmlRouteImport } from './routes/rss/$category[.]xml'
+import { Route as RssCategoryRouteImport } from './routes/rss/$category'
 import { Route as ApiPublicHooksNewscycleRouteImport } from './routes/api/public/hooks/newscycle'
 
 const IndexRoute = IndexRouteImport.update({
@@ -90,9 +90,9 @@ const CategorySlugRoute = CategorySlugRouteImport.update({
   path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RssCategoryDotxmlRoute = RssCategoryDotxmlRouteImport.update({
-  id: '/rss/$category.xml',
-  path: '/rss/$category.xml',
+const RssCategoryRoute = RssCategoryRouteImport.update({
+  id: '/rss/$category',
+  path: '/rss/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicHooksNewscycleRoute = ApiPublicHooksNewscycleRouteImport.update({
@@ -115,7 +115,7 @@ export interface FileRoutesByFullPath {
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
-  '/rss/$category.xml': typeof RssCategoryDotxmlRoute
+  '/rss/$category': typeof RssCategoryRoute
   '/api/public/hooks/newscycle': typeof ApiPublicHooksNewscycleRoute
 }
 export interface FileRoutesByTo {
@@ -132,7 +132,7 @@ export interface FileRoutesByTo {
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
-  '/rss/$category.xml': typeof RssCategoryDotxmlRoute
+  '/rss/$category': typeof RssCategoryRoute
   '/api/public/hooks/newscycle': typeof ApiPublicHooksNewscycleRoute
 }
 export interface FileRoutesById {
@@ -150,7 +150,7 @@ export interface FileRoutesById {
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
-  '/rss/$category.xml': typeof RssCategoryDotxmlRoute
+  '/rss/$category': typeof RssCategoryRoute
   '/api/public/hooks/newscycle': typeof ApiPublicHooksNewscycleRoute
 }
 export interface FileRouteTypes {
@@ -169,7 +169,7 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
-    | '/rss/$category.xml'
+    | '/rss/$category'
     | '/api/public/hooks/newscycle'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -186,7 +186,7 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
-    | '/rss/$category.xml'
+    | '/rss/$category'
     | '/api/public/hooks/newscycle'
   id:
     | '__root__'
@@ -203,7 +203,7 @@ export interface FileRouteTypes {
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
-    | '/rss/$category.xml'
+    | '/rss/$category'
     | '/api/public/hooks/newscycle'
   fileRoutesById: FileRoutesById
 }
@@ -221,7 +221,7 @@ export interface RootRouteChildren {
   ApiHealthRoute: typeof ApiHealthRoute
   ArticleSlugRoute: typeof ArticleSlugRoute
   CategorySlugRoute: typeof CategorySlugRoute
-  RssCategoryDotxmlRoute: typeof RssCategoryDotxmlRoute
+  RssCategoryRoute: typeof RssCategoryRoute
   ApiPublicHooksNewscycleRoute: typeof ApiPublicHooksNewscycleRoute
 }
 
@@ -318,11 +318,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/rss/$category.xml': {
-      id: '/rss/$category.xml'
-      path: '/rss/$category.xml'
-      fullPath: '/rss/$category.xml'
-      preLoaderRoute: typeof RssCategoryDotxmlRouteImport
+    '/rss/$category': {
+      id: '/rss/$category'
+      path: '/rss/$category'
+      fullPath: '/rss/$category'
+      preLoaderRoute: typeof RssCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/newscycle': {
@@ -349,7 +349,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiHealthRoute: ApiHealthRoute,
   ArticleSlugRoute: ArticleSlugRoute,
   CategorySlugRoute: CategorySlugRoute,
-  RssCategoryDotxmlRoute: RssCategoryDotxmlRoute,
+  RssCategoryRoute: RssCategoryRoute,
   ApiPublicHooksNewscycleRoute: ApiPublicHooksNewscycleRoute,
 }
 export const routeTree = rootRouteImport
