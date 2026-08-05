@@ -175,8 +175,13 @@ export const Route = createFileRoute("/api/public/hooks/newscycle")({
         // This endpoint is only for the scheduled newsroom cycle (pg_cron).
         // Require a shared secret so anonymous callers cannot burn AI credits
         // or flood the articles table.
-        const cronSecret = process.env["NEWSCYCLE_CRON_SECRET"];
-        if (!cronSecret) {
+        // Accept either configured shared secret so the key can be rotated
+        // without a window where the scheduler is locked out.
+        const accepted = [
+          process.env["NEWSCYCLE_CRON_TOKEN"],
+          process.env["NEWSCYCLE_CRON_SECRET"],
+        ].filter((v): v is string => Boolean(v));
+        if (!accepted.length) {
           return Response.json({ error: "Endpoint not configured" }, { status: 503 });
         }
         const provided =
@@ -184,7 +189,7 @@ export const Route = createFileRoute("/api/public/hooks/newscycle")({
           (request.headers.get("authorization")?.startsWith("Bearer ")
             ? request.headers.get("authorization")!.slice(7)
             : null);
-        if (provided !== cronSecret) {
+        if (!provided || !accepted.includes(provided)) {
           return Response.json({ error: "Unauthorized" }, { status: 401 });
         }
 
