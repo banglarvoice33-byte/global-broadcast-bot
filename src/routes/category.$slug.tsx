@@ -3,6 +3,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { articlesQuery, categoriesQuery } from "@/lib/news";
 import { ArticleCard } from "@/components/news/ArticleCard";
 import { Sidebar } from "@/components/news/Sidebar";
+import { absoluteUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/category/$slug")({
   head: ({ params }) => ({
@@ -11,6 +12,16 @@ export const Route = createFileRoute("/category/$slug")({
       { name: "description", content: "এআই অটোমেশনে হালনাগাদ সেকশনভিত্তিক সর্বশেষ সংবাদ।" },
       { property: "og:title", content: `${params.slug} সেকশন — বাংলার ভয়েস` },
       { property: "og:description", content: "সেকশনভিত্তিক সর্বশেষ যাচাইকৃত সংবাদ।" },
+      { property: "og:url", content: absoluteUrl(`/category/${params.slug}`) },
+    ],
+    links: [
+      { rel: "canonical", href: absoluteUrl(`/category/${params.slug}`) },
+      {
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: `${params.slug} — RSS`,
+        href: `/rss/${params.slug}`,
+      },
     ],
   }),
   loader: async ({ context }) => {
