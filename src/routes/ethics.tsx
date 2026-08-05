@@ -1,3 +1,4 @@
+import { absoluteUrl } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/ethics")({
@@ -10,7 +11,9 @@ export const Route = createFileRoute("/ethics")({
       },
       { property: "og:title", content: "এআই সম্পাদকীয় নীতি — বাংলার ভয়েস" },
       { property: "og:description", content: "অটোমেশনে দায়বদ্ধতার কাঠামো।" },
+      { property: "og:url", content: absoluteUrl("/ethics") },
     ],
+    links: [{ rel: "canonical", href: absoluteUrl("/ethics") }],
   }),
   component: () => (
     <div className="mx-auto max-w-3xl px-4 py-10">

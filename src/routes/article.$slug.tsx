@@ -4,6 +4,7 @@ import { ShieldCheck, Bot } from "lucide-react";
 import { articleQuery, articlesQuery, categoriesQuery, timeAgo, toBn } from "@/lib/news";
 import { ArticleCard } from "@/components/news/ArticleCard";
 import { Sidebar } from "@/components/news/Sidebar";
+import { absoluteUrl, SITE_NAME_BN, SITE_URL } from "@/lib/site";
 
 export const Route = createFileRoute("/article/$slug")({
   loader: async ({ context, params }) => {
@@ -13,24 +14,74 @@ export const Route = createFileRoute("/article/$slug")({
       context.queryClient.ensureQueryData(articlesQuery),
       context.queryClient.ensureQueryData(categoriesQuery),
     ]);
-    return { title: article.title, dek: article.dek, image: article.image_url };
+    return {
+      title: article.title,
+      dek: article.dek,
+      image: article.image_url,
+      slug: params.slug,
+      publishedAt: article.published_at,
+      categorySlug: article.category_slug,
+    };
   },
-  head: ({ loaderData }) => {
+  head: ({ params, loaderData }) => {
     if (!loaderData) {
       return { meta: [{ title: "প্রতিবেদন পাওয়া যায়নি" }, { name: "robots", content: "noindex" }] };
     }
+    const url = absoluteUrl(`/article/${params.slug}`);
     return {
       meta: [
         { title: `${loaderData.title} — বাংলার ভয়েস` },
         { name: "description", content: loaderData.dek },
         { property: "og:title", content: loaderData.title },
         { property: "og:description", content: loaderData.dek },
+        { property: "og:type", content: "article" },
+        { property: "og:url", content: url },
+        { property: "article:published_time", content: loaderData.publishedAt },
+        { property: "article:section", content: loaderData.categorySlug },
         ...(loaderData.image
           ? [
               { property: "og:image", content: loaderData.image },
               { name: "twitter:image", content: loaderData.image },
             ]
           : []),
+      ],
+      links: [{ rel: "canonical", href: url }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "NewsArticle",
+                headline: loaderData.title,
+                description: loaderData.dek,
+                mainEntityOfPage: url,
+                url,
+                inLanguage: "bn-BD",
+                datePublished: loaderData.publishedAt,
+                dateModified: loaderData.publishedAt,
+                articleSection: loaderData.categorySlug,
+                ...(loaderData.image ? { image: [loaderData.image] } : {}),
+                author: { "@type": "Organization", name: `${SITE_NAME_BN} এআই নিউজরুম ডেস্ক` },
+                publisher: { "@id": `${SITE_URL}/#organization` },
+              },
+              {
+                "@type": "BreadcrumbList",
+                itemListElement: [
+                  { "@type": "ListItem", position: 1, name: "হোম", item: SITE_URL },
+                  {
+                    "@type": "ListItem",
+                    position: 2,
+                    name: loaderData.categorySlug,
+                    item: absoluteUrl(`/category/${loaderData.categorySlug}`),
+                  },
+                  { "@type": "ListItem", position: 3, name: loaderData.title, item: url },
+                ],
+              },
+            ],
+          }),
+        },
       ],
     };
   },
