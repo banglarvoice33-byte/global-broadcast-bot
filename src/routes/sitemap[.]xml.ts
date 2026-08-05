@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { fetchFeedArticles, fetchFeedCategories } from "@/lib/feed.server";
 import { absoluteUrl, escapeXml } from "@/lib/site";
 
-const STATIC_PATHS = ["/", "/learning", "/newsroom", "/contact", "/ethics", "/privacy", "/epaper"];
+const STATIC_PATHS = ["/", "/learning", "/newsroom", "/contact", "/ethics", "/privacy"];
 
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
