@@ -1,3 +1,4 @@
+import { absoluteUrl } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { learningQuery } from "@/lib/news";
@@ -13,7 +14,9 @@ export const Route = createFileRoute("/learning")({
       },
       { property: "og:title", content: "বাংলার ভয়েস লার্নিং হাব" },
       { property: "og:description", content: "সাংবাদিকতার হাতেকলমে ফ্রি কোর্স।" },
+      { property: "og:url", content: absoluteUrl("/learning") },
     ],
+    links: [{ rel: "canonical", href: absoluteUrl("/learning") }],
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(learningQuery),
   component: LearningPage,

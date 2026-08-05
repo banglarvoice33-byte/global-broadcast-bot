@@ -1,3 +1,4 @@
+import { absoluteUrl } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail, Phone, MapPin } from "lucide-react";
 
@@ -8,7 +9,9 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "নিউজরুম, বিজ্ঞাপন ও সংশোধনী সংক্রান্ত যোগাযোগের ঠিকানা।" },
       { property: "og:title", content: "যোগাযোগ ও বিজ্ঞাপন — বাংলার ভয়েস" },
       { property: "og:description", content: "নিউজরুমে সরাসরি যোগাযোগ করুন।" },
+      { property: "og:url", content: absoluteUrl("/contact") },
     ],
+    links: [{ rel: "canonical", href: absoluteUrl("/contact") }],
   }),
   component: () => (
     <div className="mx-auto max-w-3xl px-4 py-10">

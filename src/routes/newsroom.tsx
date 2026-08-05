@@ -1,3 +1,4 @@
+import { absoluteUrl } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Activity, Bot, ShieldCheck, Radio } from "lucide-react";
@@ -13,7 +14,9 @@ export const Route = createFileRoute("/newsroom")({
       },
       { property: "og:title", content: "নিউজরুম মনিটর — বাংলার ভয়েস" },
       { property: "og:description", content: "লাইভ এআই অটোমেশন পাইপলাইন লগ।" },
+      { property: "og:url", content: absoluteUrl("/newsroom") },
     ],
+    links: [{ rel: "canonical", href: absoluteUrl("/newsroom") }],
   }),
   loader: async ({ context }) => {
     await Promise.all([

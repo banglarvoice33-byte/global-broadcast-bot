@@ -1,3 +1,4 @@
+import { absoluteUrl } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/privacy")({
@@ -7,7 +8,9 @@ export const Route = createFileRoute("/privacy")({
       { name: "description", content: "কোন তথ্য সংগ্রহ করা হয়, কীভাবে ব্যবহার ও সুরক্ষিত রাখা হয়।" },
       { property: "og:title", content: "গোপনীয়তার নীতি — বাংলার ভয়েস" },
       { property: "og:description", content: "পাঠকের তথ্য সুরক্ষার নীতিমালা।" },
+      { property: "og:url", content: absoluteUrl("/privacy") },
     ],
+    links: [{ rel: "canonical", href: absoluteUrl("/privacy") }],
   }),
   component: () => (
     <div className="mx-auto max-w-3xl px-4 py-10">
