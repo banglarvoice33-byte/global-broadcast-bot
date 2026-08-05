@@ -13,6 +13,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/news/SiteHeader";
 import { SiteFooter } from "@/components/news/SiteFooter";
+import { SITE_NAME_BN, SITE_NAME_EN, SITE_URL } from "@/lib/site";
 
 function NotFoundComponent() {
   return (
@@ -93,6 +94,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { property: "og:site_name", content: SITE_NAME_BN },
+      { property: "og:locale", content: "bn_BD" },
+      { name: "theme-color", content: "#111111" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-title", content: SITE_NAME_BN },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -105,7 +112,54 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/icons/icon-192.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      {
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: `${SITE_NAME_BN} — RSS`,
+        href: "/rss.xml",
+      },
+      {
+        rel: "alternate",
+        type: "application/feed+json",
+        title: `${SITE_NAME_BN} — JSON Feed`,
+        href: "/feed.json",
+      },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "NewsMediaOrganization",
+              "@id": `${SITE_URL}/#organization`,
+              name: SITE_NAME_BN,
+              alternateName: SITE_NAME_EN,
+              url: SITE_URL,
+              logo: `${SITE_URL}/icons/icon-512.png`,
+              ethicsPolicy: `${SITE_URL}/ethics`,
+              publishingPrinciples: `${SITE_URL}/ethics`,
+            },
+            {
+              "@type": "WebSite",
+              "@id": `${SITE_URL}/#website`,
+              url: SITE_URL,
+              name: SITE_NAME_BN,
+              inLanguage: "bn-BD",
+              publisher: { "@id": `${SITE_URL}/#organization` },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: `${SITE_URL}/search?q={search_term_string}`,
+                "query-input": "required name=search_term_string",
+              },
+            },
+          ],
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -130,6 +184,14 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
+    if (window.location.hostname === "localhost") return;
+    navigator.serviceWorker.register("/sw.js").catch(() => {
+      /* offline support is best-effort */
+    });
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
