@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { fetchFeedArticles, fetchFeedCategories } from "@/lib/feed.server";
 import { renderRss } from "@/lib/rss.server";
 
-export const Route = createFileRoute("/rss/$category.xml")({
+export const Route = createFileRoute("/rss/$category")({
   server: {
     handlers: {
       GET: async ({ params }) => {
