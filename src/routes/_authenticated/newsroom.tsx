@@ -4,7 +4,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { Activity, Bot, ShieldCheck, Radio } from "lucide-react";
 import { automationQuery, articlesQuery, timeAgo, toBn } from "@/lib/news";
 
-export const Route = createFileRoute("/newsroom")({
+export const Route = createFileRoute("/_authenticated/newsroom")({
   head: () => ({
     meta: [
       { title: "নিউজরুম মনিটর — ২৪/৭ এআই অটোমেশন" },

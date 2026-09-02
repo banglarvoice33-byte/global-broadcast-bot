@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { Search, Sun, Moon, Eye, Radio, CloudSun, Menu, X } from "lucide-react";
+import { Search, Sun, Moon, Eye, Radio, CloudSun, Menu, X, ShieldCheck } from "lucide-react";
 import { articlesQuery, categoriesQuery, bnDate, toBn } from "@/lib/news";
+import { useSession } from "@/lib/auth";
 
 type Mode = "light" | "dark" | "care";
 
@@ -19,6 +20,8 @@ export function SiteHeader() {
   const [term, setTerm] = useState("");
   const [open, setOpen] = useState(false);
   const [today, setToday] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const { data: session } = useSession();
   const { data: categories = [] } = useQuery(categoriesQuery);
   const { data: articles = [] } = useQuery(articlesQuery);
 
@@ -27,6 +30,7 @@ export function SiteHeader() {
     setMode(saved);
     applyMode(saved);
     setToday(bnDate());
+    setMounted(true);
   }, []);
 
   const cycle = () => {
@@ -35,7 +39,7 @@ export function SiteHeader() {
     applyMode(next);
   };
 
-  const breaking = articles.filter((a) => a.is_breaking);
+  const breaking = (mounted ? articles : []).filter((a) => a.is_breaking);
   const ticker = (breaking.length ? breaking : articles.slice(0, 6)).map((a) => a.title);
 
   const submit = (e: React.FormEvent) => {
@@ -93,6 +97,13 @@ export function SiteHeader() {
               <Search className="h-4 w-4" />
             </button>
           </form>
+          <Link
+            to={session ? "/admin" : "/auth"}
+            className="slab-sm slab-press hidden h-10 items-center gap-1.5 px-3 font-display text-sm sm:inline-flex"
+          >
+            <ShieldCheck className="h-4 w-4 shrink-0" />
+            {session ? "অ্যাডমিন" : "স্টাফ লগইন"}
+          </Link>
           <button
             onClick={cycle}
             className="slab-sm slab-press grid h-10 w-10 place-items-center"
@@ -122,7 +133,7 @@ export function SiteHeader() {
         className={`border-t-[3px] border-border bg-background ${open ? "block" : "hidden md:block"}`}
       >
         <div className="mx-auto flex max-w-[1400px] flex-col gap-0 px-4 md:flex-row md:flex-wrap md:items-center">
-          {categories.map((c) => (
+          {(mounted ? categories : []).map((c) => (
             <Link
               key={c.slug}
               to="/category/$slug"
@@ -144,9 +155,16 @@ export function SiteHeader() {
           <Link
             to="/newsroom"
             onClick={() => setOpen(false)}
-            className="px-3 py-2.5 font-display text-sm hover:bg-highlight"
+            className="border-b-[2px] border-dashed border-border px-3 py-2.5 font-display text-sm hover:bg-highlight md:border-b-0 md:border-r-[3px] md:border-solid"
           >
             নিউজরুম মনিটর
+          </Link>
+          <Link
+            to={session ? "/admin" : "/auth"}
+            onClick={() => setOpen(false)}
+            className="px-3 py-2.5 font-display text-sm hover:bg-highlight md:hidden"
+          >
+            {session ? "অ্যাডমিন প্যানেল" : "স্টাফ লগইন"}
           </Link>
           <form onSubmit={submit} className="flex py-2 md:hidden">
             <input

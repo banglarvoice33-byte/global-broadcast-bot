@@ -10,15 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as FeedDotjsonRouteImport } from './routes/feed[.]json'
 import { Route as LearningRouteImport } from './routes/learning'
-import { Route as NewsroomRouteImport } from './routes/newsroom'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedNewsroomRouteImport } from './routes/_authenticated/newsroom'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
@@ -28,6 +31,15 @@ import { Route as ApiPublicHooksNewscycleRouteImport } from './routes/api/public
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -50,11 +62,6 @@ const LearningRoute = LearningRouteImport.update({
   path: '/learning',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NewsroomRoute = NewsroomRouteImport.update({
-  id: '/newsroom',
-  path: '/newsroom',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -74,6 +81,16 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNewsroomRoute = AuthenticatedNewsroomRouteImport.update({
+  id: '/newsroom',
+  path: '/newsroom',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
   id: '/api/health',
@@ -103,15 +120,17 @@ const ApiPublicHooksNewscycleRoute = ApiPublicHooksNewscycleRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/ethics': typeof EthicsRoute
   '/feed.json': typeof FeedDotjsonRoute
   '/learning': typeof LearningRoute
-  '/newsroom': typeof NewsroomRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/newsroom': typeof AuthenticatedNewsroomRoute
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -120,15 +139,17 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/ethics': typeof EthicsRoute
   '/feed.json': typeof FeedDotjsonRoute
   '/learning': typeof LearningRoute
-  '/newsroom': typeof NewsroomRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/newsroom': typeof AuthenticatedNewsroomRoute
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -138,15 +159,18 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/ethics': typeof EthicsRoute
   '/feed.json': typeof FeedDotjsonRoute
   '/learning': typeof LearningRoute
-  '/newsroom': typeof NewsroomRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/newsroom': typeof AuthenticatedNewsroomRoute
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -157,15 +181,17 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/contact'
     | '/ethics'
     | '/feed.json'
     | '/learning'
-    | '/newsroom'
     | '/privacy'
     | '/rss.xml'
     | '/search'
     | '/sitemap.xml'
+    | '/admin'
+    | '/newsroom'
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
@@ -174,15 +200,17 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/contact'
     | '/ethics'
     | '/feed.json'
     | '/learning'
-    | '/newsroom'
     | '/privacy'
     | '/rss.xml'
     | '/search'
     | '/sitemap.xml'
+    | '/admin'
+    | '/newsroom'
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
@@ -191,15 +219,18 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/contact'
     | '/ethics'
     | '/feed.json'
     | '/learning'
-    | '/newsroom'
     | '/privacy'
     | '/rss.xml'
     | '/search'
     | '/sitemap.xml'
+    | '/_authenticated/admin'
+    | '/_authenticated/newsroom'
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
@@ -209,11 +240,12 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   EthicsRoute: typeof EthicsRoute
   FeedDotjsonRoute: typeof FeedDotjsonRoute
   LearningRoute: typeof LearningRoute
-  NewsroomRoute: typeof NewsroomRoute
   PrivacyRoute: typeof PrivacyRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SearchRoute: typeof SearchRoute
@@ -232,6 +264,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -262,13 +308,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/newsroom': {
-      id: '/newsroom'
-      path: '/newsroom'
-      fullPath: '/newsroom'
-      preLoaderRoute: typeof NewsroomRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -296,6 +335,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/newsroom': {
+      id: '/_authenticated/newsroom'
+      path: '/newsroom'
+      fullPath: '/newsroom'
+      preLoaderRoute: typeof AuthenticatedNewsroomRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/health': {
       id: '/api/health'
@@ -335,13 +388,27 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedNewsroomRoute: typeof AuthenticatedNewsroomRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedNewsroomRoute: AuthenticatedNewsroomRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   EthicsRoute: EthicsRoute,
   FeedDotjsonRoute: FeedDotjsonRoute,
   LearningRoute: LearningRoute,
-  NewsroomRoute: NewsroomRoute,
   PrivacyRoute: PrivacyRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SearchRoute: SearchRoute,
@@ -355,3 +422,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
