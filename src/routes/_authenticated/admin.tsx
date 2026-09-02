@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient, queryOptions } from "@tanstack/react-query";
 import { CheckCircle2, EyeOff, Flame, Star, Trash2, ShieldAlert, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useSession, isStaff, sessionQuery } from "@/lib/auth";
+import { useSession, isStaff } from "@/lib/auth";
 import { automationQuery, timeAgo, toBn } from "@/lib/news";
 import { absoluteUrl } from "@/lib/site";
 
@@ -248,5 +248,3 @@ function AdminPanel() {
     </div>
   );
 }
-
-export { sessionQuery };

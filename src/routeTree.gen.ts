@@ -16,12 +16,12 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EthicsRouteImport } from './routes/ethics'
 import { Route as FeedDotjsonRouteImport } from './routes/feed[.]json'
 import { Route as LearningRouteImport } from './routes/learning'
-import { Route as NewsroomRouteImport } from './routes/newsroom'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedNewsroomRouteImport } from './routes/_authenticated/newsroom'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
 import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 import { Route as CategorySlugRouteImport } from './routes/category.$slug'
@@ -62,11 +62,6 @@ const LearningRoute = LearningRouteImport.update({
   path: '/learning',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NewsroomRoute = NewsroomRouteImport.update({
-  id: '/newsroom',
-  path: '/newsroom',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
@@ -90,6 +85,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedNewsroomRoute = AuthenticatedNewsroomRouteImport.update({
+  id: '/newsroom',
+  path: '/newsroom',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
@@ -125,12 +125,12 @@ export interface FileRoutesByFullPath {
   '/ethics': typeof EthicsRoute
   '/feed.json': typeof FeedDotjsonRoute
   '/learning': typeof LearningRoute
-  '/newsroom': typeof NewsroomRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/newsroom': typeof AuthenticatedNewsroomRoute
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -144,12 +144,12 @@ export interface FileRoutesByTo {
   '/ethics': typeof EthicsRoute
   '/feed.json': typeof FeedDotjsonRoute
   '/learning': typeof LearningRoute
-  '/newsroom': typeof NewsroomRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/admin': typeof AuthenticatedAdminRoute
+  '/newsroom': typeof AuthenticatedNewsroomRoute
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -165,12 +165,12 @@ export interface FileRoutesById {
   '/ethics': typeof EthicsRoute
   '/feed.json': typeof FeedDotjsonRoute
   '/learning': typeof LearningRoute
-  '/newsroom': typeof NewsroomRoute
   '/privacy': typeof PrivacyRoute
   '/rss.xml': typeof RssDotxmlRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/newsroom': typeof AuthenticatedNewsroomRoute
   '/api/health': typeof ApiHealthRoute
   '/article/$slug': typeof ArticleSlugRoute
   '/category/$slug': typeof CategorySlugRoute
@@ -186,12 +186,12 @@ export interface FileRouteTypes {
     | '/ethics'
     | '/feed.json'
     | '/learning'
-    | '/newsroom'
     | '/privacy'
     | '/rss.xml'
     | '/search'
     | '/sitemap.xml'
     | '/admin'
+    | '/newsroom'
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
@@ -205,12 +205,12 @@ export interface FileRouteTypes {
     | '/ethics'
     | '/feed.json'
     | '/learning'
-    | '/newsroom'
     | '/privacy'
     | '/rss.xml'
     | '/search'
     | '/sitemap.xml'
     | '/admin'
+    | '/newsroom'
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
@@ -225,12 +225,12 @@ export interface FileRouteTypes {
     | '/ethics'
     | '/feed.json'
     | '/learning'
-    | '/newsroom'
     | '/privacy'
     | '/rss.xml'
     | '/search'
     | '/sitemap.xml'
     | '/_authenticated/admin'
+    | '/_authenticated/newsroom'
     | '/api/health'
     | '/article/$slug'
     | '/category/$slug'
@@ -246,7 +246,6 @@ export interface RootRouteChildren {
   EthicsRoute: typeof EthicsRoute
   FeedDotjsonRoute: typeof FeedDotjsonRoute
   LearningRoute: typeof LearningRoute
-  NewsroomRoute: typeof NewsroomRoute
   PrivacyRoute: typeof PrivacyRoute
   RssDotxmlRoute: typeof RssDotxmlRoute
   SearchRoute: typeof SearchRoute
@@ -309,13 +308,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LearningRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/newsroom': {
-      id: '/newsroom'
-      path: '/newsroom'
-      fullPath: '/newsroom'
-      preLoaderRoute: typeof NewsroomRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
@@ -349,6 +341,13 @@ declare module '@tanstack/react-router' {
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/newsroom': {
+      id: '/_authenticated/newsroom'
+      path: '/newsroom'
+      fullPath: '/newsroom'
+      preLoaderRoute: typeof AuthenticatedNewsroomRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/health': {
@@ -391,10 +390,12 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedNewsroomRoute: typeof AuthenticatedNewsroomRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedNewsroomRoute: AuthenticatedNewsroomRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -408,7 +409,6 @@ const rootRouteChildren: RootRouteChildren = {
   EthicsRoute: EthicsRoute,
   FeedDotjsonRoute: FeedDotjsonRoute,
   LearningRoute: LearningRoute,
-  NewsroomRoute: NewsroomRoute,
   PrivacyRoute: PrivacyRoute,
   RssDotxmlRoute: RssDotxmlRoute,
   SearchRoute: SearchRoute,
